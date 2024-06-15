@@ -69,6 +69,13 @@ class MemberServiceV3_3Test {
     }
 
     @Test
+    void AopCheck() {
+        log.info("memberService class={}", memberService.getClass());
+        log.info("memberRepository class={}", memberRepository.getClass());
+        assertThat(AopUtils.isAopProxy(memberService)).isTrue();
+    }
+
+    @Test
     @DisplayName("정상 이체")
     void accountTransfer() throws SQLException {
         //given
@@ -85,13 +92,6 @@ class MemberServiceV3_3Test {
         Member findMemberB = memberRepository.findById(memberB.getMemberId());
         assertThat(findMemberA.getMoney()).isEqualTo(8000);
         assertThat(findMemberB.getMoney()).isEqualTo(12000);
-    }
-
-    @Test
-    void AopCheck() {
-        log.info("memberService class={}", memberService.getClass());
-        log.info("memberRepository class={}", memberRepository.getClass());
-        assertThat(AopUtils.isAopProxy(memberService)).isTrue();
     }
 
     @Test
